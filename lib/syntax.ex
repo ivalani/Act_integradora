@@ -129,8 +129,7 @@ defmodule SyntaxHighlighter do
     htmlLine = "#{htmlLine}#{tags}"
     {line, htmlLine}
   end
-' Marca que es ambiguo porque aun no estan las paginas htmls
-
+'
   def getNum(line, htmlLine) do
     Regex.run()
   end
