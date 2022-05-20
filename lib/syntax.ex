@@ -12,6 +12,7 @@ Daniel Sanchez Sanchez  -
 # REGEX for punctuation:(?=^) *[{},:\[\]]+
 # REGEX for reserved words:(?!.*\d)(?=^)(?=(?:[^"]*"[^"]*")*[^"]*\Z) *[a-zA-Z]
 # REGEX for numbers:(?=(?:[^"]*"[^"]*")*[^"]*\Z)(?=^) *[\d+E.-]
+
 #Test to remove
 '
 defmodule Syntax do
@@ -32,6 +33,65 @@ end
 '
 #defmodule Evidencia do
 defmodule SyntaxHighlighter do
+  import NimbleParsec
+  whitespace = ascii_string([?\r, ?\s, ?\n, ?\f], min: 1) |> token(:whitespace)
+
+  newlines =
+    choice([string("\r\n"), string("\n")])
+    |> optional(ascii_string([?\s, ?\n, ?\f, ?\r], min: 1))
+    |> token(:whitespace)
+
+  any_char = utf8_char([]) |> token(:error)
+
+  # Numbers
+  digits = ascii_string([?0..?9], min: 1)
+
+  integer = optional(string("-")) |> concat(digits)
+  # Base 10
+  number_integer = token(integer, :number_integer)
+
+  # Floating point numbers
+  float_scientific_notation_part =
+    ascii_string([?e, ?E], 1)
+    |> optional(string("-"))
+    |> optional(string("+"))
+    |> concat(integer)
+
+  number_float =
+    integer
+    |> optional(string("."))
+    |> concat(integer)
+    |> optional(float_scientific_notation_part)
+    |> token(:number_float)
+
+  number_float2 =
+    integer
+    |> ascii_string([?e, ?E], 1)
+    |> optional(string("-"))
+    |> optional(string("+"))
+    |> concat(integer)
+    |> token(:number_float)
+
+  normal_char =
+    string("?")
+    |> utf8_string([], 1)
+    |> token(:string_char)
+
+  unicode_char_in_string =
+    string("\\u")
+    |> ascii_string([?0..?9, ?a..?f, ?A..?F], 4)
+    |> token(:string_escape)
+
+  escaped_char =
+    string("\\")
+    |> utf8_string([], 1)
+    |> token(:string_escape)
+
+  punctuation =
+    word_from_list(
+      [":", ";", ","],
+      :punctuation
+    )
   def parseJSON(in_filename, out_filename) do
     html =
       in_filename
