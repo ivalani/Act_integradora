@@ -18,7 +18,7 @@ defmodule SyntaxHighlighter do
   @moduledoc false
 
   # parsec:MyParser
-  import NimbleParsec
+  #import NimbleParsec
 
   def parseJSON(in_filename, out_filename) do
     html =
@@ -120,22 +120,23 @@ defmodule SyntaxHighlighter do
 
   def getNum(line, htmlLine) do
     lineTemp = line
-    [number] = Regex.run(ascii_string([?0..?9], line))
+    #[number] = Regex.run(ascii_string([?0..?9], line))
+    [number] = Regex.run(~r/(?=(?:[^"]*"[^"]*")*[^"]*\Z)(?=^) *[\d+E.-]/, line)
     line = elem(String.split_at(lineTemp, String.length(number)),1)
     tags = "<span class=\"number\">#{number}</span>"
     htmlLine = "#{htmlLine}#{tags}"
     {line, htmlLine}
-    Regex.run()
+    #Regex.run()
   end
 
   def getBool(line, htmlLine) do
     lineTemp = line
-    [bool] = Regex.run(~r/"true|false|True|False|Null|null|NULL"/, line)
+    [bool] = Regex.run(~r/true|false|True|False|Null|null|NULL/, line)
     line = elem(String.split_at(lineTemp, String.length(bool)),1)
     tags = "<span class=\"bool\">#{bool}</span>"
     htmlLine = "#{htmlLine}#{tags}"
     {line, htmlLine}
-    Regex.run()
+    #Regex.run()
   end
 
   #def getNull(line, htmlLine) do

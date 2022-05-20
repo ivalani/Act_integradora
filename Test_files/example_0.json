@@ -3,15 +3,15 @@
     "movie": "King Kong",
     "year": 1933,
     "director": "Merian C. Cooper",
-    "oscarWinner": null,
+    "oscarWinner": true,
     "imdb": 790.0E-2
   },
   {
-    "movie"       : "Jaws",
-    "year"        : 1975,
-    "director"    : "Steven Spielberg",
+    "movie" : "Jaws",
+    "year": 1975,
+    "director" : "Steven Spielberg",
     "oscarWinner" : true,
-    "imdb"        : 0.80E+1
+    "imdb" : 0.80E+1
   },
   {
     "movie": "Avengers: Endgame",
