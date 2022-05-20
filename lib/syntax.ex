@@ -127,15 +127,21 @@ defmodule SyntaxHighlighter do
     {line, htmlLine}
     Regex.run()
   end
-  '
+
   def getBool(line, htmlLine) do
+    lineTemp = line
+    [bool] = Regex.run(~r/"true|false|True|False|Null|null|NULL"/, line)
+    line = elem(String.split_at(lineTemp, String.length(bool)),1)
+    tags = "<span class=\"bool\">#{bool}</span>"
+    htmlLine = "#{htmlLine}#{tags}"
+    {line, htmlLine}
     Regex.run()
   end
 
-  def getNull(line, htmlLine) do
-    Regex.run()
-  end
-  '
+  #def getNull(line, htmlLine) do
+    #Regex.run()
+  #end
+
   def getWhitespaces(line, htmlLine) do
     lineTemp = line
     [whitespaces] = Regex.run(~r/^\s+/, line)
