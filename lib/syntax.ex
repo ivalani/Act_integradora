@@ -13,26 +13,11 @@ Daniel Sanchez Sanchez  - A0178575
 # REGEX for reserved words:(?!.*\d)(?=^)(?=(?:[^"]*"[^"]*")*[^"]*\Z) *[a-zA-Z]
 # REGEX for numbers:(?=(?:[^"]*"[^"]*")*[^"]*\Z)(?=^) *[\d+E.-]
 
-#Test to remove
-'
-defmodule Syntax do
-  def json_to_hmtl(in_filename, out_filename) do
-    template = File.read("Page_files/template_page")
-    tokens =
-      in_filename
-      |> Enum.stream!() #generate row list
-      |> Enum.map()
-      |> Enum.joint("\n")
-    File.write(out_filename,tokens)
-  end
-
-  def token?(line) do
-
-  end
-end
-'
 #defmodule Evidencia do
 defmodule SyntaxHighlighter do
+  @moduledoc false
+
+  # parsec:MyParser
   import NimbleParsec
   whitespace = ascii_string([?\r, ?\s, ?\n, ?\f], min: 1) |> token(:whitespace)
 
