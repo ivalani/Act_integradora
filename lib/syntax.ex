@@ -6,7 +6,12 @@ Andrea Serrano Diego  -
 Iwalani Amador Piaga  - A01732251
 Daniel Sanchez Sanchez  -
 '
-
+# --------------------------------------------------List of REGEX -------------------------------------------------
+# REGEX for KEYS:(?=^) *"[\w0-9:-]+"(?=:)
+# REGEX for VALUES (String):(?!.*:)(?=^) *"[\(\)\;a-zA-z0-9.&': ?@+!=\/.\*,-]+"| *"[\(\)\;a-zA-z0-9.&': ?@+!=\/.\*,-]+"(?=,)
+# REGEX for punctuation:(?=^) *[{},:\[\]]+
+# REGEX for reserved words:(?!.*\d)(?=^)(?=(?:[^"]*"[^"]*")*[^"]*\Z) *[a-zA-Z]
+# REGEX for numbers:(?=(?:[^"]*"[^"]*")*[^"]*\Z)(?=^) *[\d+E.-]
 #Test to remove
 '
 defmodule Syntax do
