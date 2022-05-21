@@ -79,14 +79,14 @@ defmodule SyntaxHighlighter do
     tuple = getPuntuation(line, htmlLine)
     do_readLine(elem(tuple, 0), elem(tuple, 1))
   end
-  # defp do_readLine(line, htmlLine) do
-  #   tuple = getNum(line, htmlLine)
-  #   do_readLine(elem(tuple, 0), elem(tuple, 1))
-  # end
-  # defp do_readLine(line, htmlLine) do
-  #   tuple = getBool(line, htmlLine)
-  #   do_readLine(elem(tuple, 0), elem(tuple, 1))
-  # end
+  defp do_readLine(line, htmlLine) do
+     tuple = getNum(line, htmlLine)
+     do_readLine(elem(tuple, 0), elem(tuple, 1))
+   end
+   defp do_readLine(line, htmlLine) do
+     tuple = getReserved(line, htmlLine)
+     do_readLine(elem(tuple, 0), elem(tuple, 1))
+   end
 
   # Helper Functions that identify each valid section
   # through regular expressions and return a tupple
@@ -129,11 +129,11 @@ defmodule SyntaxHighlighter do
     #Regex.run()
   end
 
-  def getBool(line, htmlLine) do
+  def getReserved(line, htmlLine) do
     lineTemp = line
-    [bool] = Regex.run(~r/true|false|True|False|Null|null|NULL/, line)
-    line = elem(String.split_at(lineTemp, String.length(bool)),1)
-    tags = "<span class=\"bool\">#{bool}</span>"
+    [reserved_word] = Regex.run(~r/true|false|True|False|Null|null|NULL/, line)
+    line = elem(String.split_at(lineTemp, String.length(reserved_word)),1)
+    tags = "<span class=\"reserved_word\">#{reserved_word}</span>"
     htmlLine = "#{htmlLine}#{tags}"
     {line, htmlLine}
     #Regex.run()
