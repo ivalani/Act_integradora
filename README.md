@@ -13,12 +13,14 @@ Integrative Activity 3.4 report
 
 ---
 
-1. [Index](#index)
-2. [Program Description](#program-description)
-3. [Lexical Categories](#lexical-categories)
-4. [Program Specifications](#program-specifications)
-5. [How to run](#how-to-run)
-6. [Solution Reflection](#solution-reflection)
+- [Syntax-highlighter](#syntax-highlighter)
+    - [Team](#team)
+  - [_Index_](#index)
+  - [_Program Description_](#program-description)
+  - [_Lexical Categories_](#lexical-categories)
+  - [_Program Specifications_](#program-specifications)
+  - [_How to run_](#how-to-run)
+  - [_Solution Reflection_](#solution-reflection)
 
 ---
 ##
@@ -116,7 +118,7 @@ Randomized with seed 820627
 ```
 ##
 ## _Solution Reflection_
-
+  We intend to use NimbleParsec is a simple and fast library for text-based parsing combinators. To reduce the syntax of regular expressions, but it was not successful, so we decided to leave the original ones. 
 
 
 

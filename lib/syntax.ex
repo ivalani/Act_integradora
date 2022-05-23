@@ -2,7 +2,7 @@
 #Program that takes json files and returns an html for syntax highlighting
 ' Actividad integradora 3.4 - Resaltador de sintaxis
 
-Andrea Serrano Diego  -
+Andrea Serrano Diego  - A01028728
 Iwalani Amador Piaga  - A01732251
 Daniel Sanchez Sanchez  - A0178575
 '
