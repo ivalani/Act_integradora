@@ -1,0 +1,26 @@
+<%
+  import Benchee.Formatter.Markdown.Helpers
+
+  alias Benchee.Scenario
+  alias Benchee.Statistics
+
+  %Scenario{
+    name: name,
+    memory_usage_data: %{
+      statistics: %Statistics{
+        average: average,
+        relative_more: more_memory
+      }
+    }
+  } = scenario
+
+  factor = if more_memory == :infinity do
+    "&mdash;"
+  else
+    "#{Float.round(more_memory, 2)}x"
+  end
+%>    <tr>
+    <td style="white-space: nowrap"><%= name %></td>
+    <td style="white-space: nowrap"><%= memory_output(average, units.memory) %></td>
+    <td><%= factor %></td>
+  </tr>
