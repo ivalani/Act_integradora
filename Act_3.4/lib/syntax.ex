@@ -49,9 +49,9 @@ defmodule SyntaxHighlighter do
 
   # Reads all lines unitl there are no more
   def readLine(line), do: do_readLine(line, "")
-  defp do_readLine("", htmlLine), do: htmlLine
   defp do_readLine(line, ""), do: do_readSpaces(line, "")
   defp do_readLine(line, htmlLine), do: do_readSpaces(line, htmlLine)
+  defp do_readLine("", htmlLine), do: htmlLine
 
   defp do_readSpaces(line, htmlLine) do
     if !Regex.run(~r/^\s+/, line) do
@@ -95,6 +95,11 @@ defmodule SyntaxHighlighter do
     do_readLine(elem(tuple, 0), elem(tuple, 1))
   end
 
+  defp do_readLine(line, htmlLine) do
+    tuple = getReserved(line, htmlLine)
+    do_readLine(elem(tuple, 0), elem(tuple, 1))
+  end
+
   def getpunt(line, htmlLine) do
     lineTemp = line
     [punt] = Regex.run(~r/^[{}\[\]:,]/, line)
@@ -115,6 +120,7 @@ defmodule SyntaxHighlighter do
 
   def getKey(line, htmlLine) do
     lineTemp = line
+    #[completeLine, objectKey, punt] = Regex.run(~r/^(:)/, line)
     [completeLine, objectKey, punt] = Regex.run(~r/^(".*?")(:)/, line)
     line = elem(String.split_at(lineTemp, String.length(completeLine)), 1)
 
@@ -125,7 +131,9 @@ defmodule SyntaxHighlighter do
   end
 
   def getReserved(line, htmlLine) do
+
     lineTemp = line
+    # [reserver_word] = Regex.run(ascii_string([?0..?9], line))
     [reserved_word] = Regex.run(~r/true|false|True|False|Null|null|NULL/, line)
     line = elem(String.split_at(lineTemp, String.length(reserved_word)), 1)
     tags = "<span class=\"reserved_word\">#{reserved_word}</span>"
