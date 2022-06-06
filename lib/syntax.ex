@@ -1,11 +1,11 @@
-
-#Program that takes json files and returns an html for syntax highlighting
+# Program that takes json files and returns an html for syntax highlighting
 ' Actividad integradora 3.4 - Resaltador de sintaxis
 
 Andrea Serrano Diego  - A01028728
 Iwalani Amador Piaga  - A01732251
 Daniel Sanchez Sanchez  - A0178575
 '
+
 # --------------------------------------------------List of REGEX -------------------------------------------------
 # REGEX for KEYS:(?=^) *"[\w0-9:-]+"(?=:)
 # REGEX for VALUES (String):(?!.*:)(?=^) *"[\(\)\;a-zA-z0-9.&': ?@+!=\/.\*,-]+"| *"[\(\)\;a-zA-z0-9.&': ?@+!=\/.\*,-]+"(?=,)
@@ -13,12 +13,12 @@ Daniel Sanchez Sanchez  - A0178575
 # REGEX for reserved words:(?!.*\d)(?=^)(?=(?:[^"]*"[^"]*")*[^"]*\Z) *[a-zA-Z]
 # REGEX for numbers:(?=(?:[^"]*"[^"]*")*[^"]*\Z)(?=^) *[\d+E.-]
 
-#defmodule Evidencia do
+# defmodule Evidencia do
 defmodule SyntaxHighlighter do
   @moduledoc false
 
   # parsec:MyParser
-  #import NimbleParsec
+  # import NimbleParsec
 
   def parseJSON(in_filename, out_filename) do
     html =
@@ -27,6 +27,7 @@ defmodule SyntaxHighlighter do
       |> Enum.map(&readLine/1)
       |> IO.inspect()
       |> Enum.join("")
+
     html = """
     <!DOCTYPE html>
     <html>
@@ -35,13 +36,14 @@ defmodule SyntaxHighlighter do
       <link rel="stylesheet" href="token_colors.css" />
       </head>
       <body>
-        <h1>#{NaiveDateTime.local_now}</h1>
+        <h1>#{NaiveDateTime.local_now()}</h1>
         <pre>
     #{html}
         </pre>
       </body>
     </html>
     """
+
     File.write(out_filename, html)
   end
 
@@ -51,22 +53,25 @@ defmodule SyntaxHighlighter do
   defp do_readLine("", htmlLine), do: htmlLine
   defp do_readLine(line, ""), do: do_readWhitespaces(line, "")
   defp do_readLine(line, htmlLine), do: do_readWhitespaces(line, htmlLine)
+
   defp do_readWhitespaces(line, htmlLine) do
     if !Regex.run(~r/^\s+/, line) do
-      do_readObjectKey(line,htmlLine)
+      do_readObjectKey(line, htmlLine)
     else
       tuple = getWhitespaces(line, htmlLine)
       do_readLine(elem(tuple, 0), elem(tuple, 1))
     end
   end
+
   defp do_readObjectKey(line, htmlLine) do
     if !Regex.run(~r/^(".*?")(:)/, line) do
-      do_readString(line,htmlLine)
+      do_readString(line, htmlLine)
     else
       tuple = getObjectKey(line, htmlLine)
       do_readLine(elem(tuple, 0), elem(tuple, 1))
     end
   end
+
   defp do_readString(line, htmlLine) do
     if !Regex.run(~r/^".*?"/, line) do
       do_readPuntuation(line, htmlLine)
@@ -75,18 +80,21 @@ defmodule SyntaxHighlighter do
       do_readLine(elem(tuple, 0), elem(tuple, 1))
     end
   end
+
   defp do_readPuntuation(line, htmlLine) do
     tuple = getPuntuation(line, htmlLine)
     do_readLine(elem(tuple, 0), elem(tuple, 1))
   end
+
   defp do_readLine(line, htmlLine) do
-     tuple = getNum(line, htmlLine)
-     do_readLine(elem(tuple, 0), elem(tuple, 1))
-   end
-   defp do_readLine(line, htmlLine) do
-     tuple = getReserved(line, htmlLine)
-     do_readLine(elem(tuple, 0), elem(tuple, 1))
-   end
+    tuple = getNum(line, htmlLine)
+    do_readLine(elem(tuple, 0), elem(tuple, 1))
+  end
+
+  defp do_readLine(line, htmlLine) do
+    tuple = getReserved(line, htmlLine)
+    do_readLine(elem(tuple, 0), elem(tuple, 1))
+  end
 
   # Helper Functions that identify each valid section
   # through regular expressions and return a tupple
@@ -94,7 +102,7 @@ defmodule SyntaxHighlighter do
   def getPuntuation(line, htmlLine) do
     lineTemp = line
     [puntuation] = Regex.run(~r/^[{}\[\]:,]/, line)
-    line = elem(String.split_at(lineTemp, String.length(puntuation)),1)
+    line = elem(String.split_at(lineTemp, String.length(puntuation)), 1)
     tags = "<span class=\"punctuation\">#{puntuation}</span>"
     htmlLine = "#{htmlLine}#{tags}"
     {line, htmlLine}
@@ -103,8 +111,11 @@ defmodule SyntaxHighlighter do
   def getObjectKey(line, htmlLine) do
     lineTemp = line
     [completeLine, objectKey, puntuation] = Regex.run(~r/^(".*?")(:)/, line)
-    line = elem(String.split_at(lineTemp, String.length(completeLine)),1)
-    tags = "<span class=\"objectKey\">#{objectKey}</span><span class=\"puntuation\">#{puntuation}</span>"
+    line = elem(String.split_at(lineTemp, String.length(completeLine)), 1)
+
+    tags =
+      "<span class=\"objectKey\">#{objectKey}</span><span class=\"puntuation\">#{puntuation}</span>"
+
     htmlLine = "#{htmlLine}#{tags}"
     {line, htmlLine}
   end
@@ -112,7 +123,7 @@ defmodule SyntaxHighlighter do
   def getString(line, htmlLine) do
     lineTemp = line
     [string] = Regex.run(~r/^".*?"/, line)
-    line = elem(String.split_at(lineTemp, String.length(string)),1)
+    line = elem(String.split_at(lineTemp, String.length(string)), 1)
     tags = "<span class=\"string\">#{string}</span>"
     htmlLine = "#{htmlLine}#{tags}"
     {line, htmlLine}
@@ -120,33 +131,33 @@ defmodule SyntaxHighlighter do
 
   def getNum(line, htmlLine) do
     lineTemp = line
-    #[number] = Regex.run(ascii_string([?0..?9], line))
+    # [number] = Regex.run(ascii_string([?0..?9], line))
     [number] = Regex.run(~r/(?=(?:[^"]*"[^"]*")*[^"]*\Z)(?=^) *[\d+E.-]/, line)
-    line = elem(String.split_at(lineTemp, String.length(number)),1)
+    line = elem(String.split_at(lineTemp, String.length(number)), 1)
     tags = "<span class=\"number\">#{number}</span>"
     htmlLine = "#{htmlLine}#{tags}"
     {line, htmlLine}
-    #Regex.run()
+    # Regex.run()
   end
 
   def getReserved(line, htmlLine) do
     lineTemp = line
     [reserved_word] = Regex.run(~r/true|false|True|False|Null|null|NULL/, line)
-    line = elem(String.split_at(lineTemp, String.length(reserved_word)),1)
+    line = elem(String.split_at(lineTemp, String.length(reserved_word)), 1)
     tags = "<span class=\"reserved_word\">#{reserved_word}</span>"
     htmlLine = "#{htmlLine}#{tags}"
     {line, htmlLine}
-    #Regex.run()
+    # Regex.run()
   end
 
-  #def getNull(line, htmlLine) do
-    #Regex.run()
-  #end
+  # def getNull(line, htmlLine) do
+  # Regex.run()
+  # end
 
   def getWhitespaces(line, htmlLine) do
     lineTemp = line
     [whitespaces] = Regex.run(~r/^\s+/, line)
-    line = elem(String.split_at(lineTemp, String.length(whitespaces)),1)
+    line = elem(String.split_at(lineTemp, String.length(whitespaces)), 1)
     htmlLine = "#{htmlLine}#{whitespaces}"
     {line, htmlLine}
   end
