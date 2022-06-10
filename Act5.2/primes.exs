@@ -1,15 +1,18 @@
-#!/usr/bin/env elixir
-
 # The sum of the primes below 5 000 000 is 838,596,693,108.
-
 # Find the sum of all the primes below five million.
-Primes.prime_stream
-|> Enum.take_while(fn(n) -> n < 5_000_000 end)
-|> Enum.sum
-|> IO.inspect
 
-defmodule Primes do
-  def prime_stream do
+
+defmodule Hw.Primes do
+
+  #Falta definir el timer
+  def timer(funtion)do
+    fuction
+
+  end
+
+
+
+  def sum_primes do
     Stream.unfold {}, fn(accu) ->
       prime = next_prime(accu)
       { prime, accu |> :erlang.append_element(prime) }
@@ -40,6 +43,15 @@ defmodule Primes do
       true                  -> prime?(num, prev_primes, i + 1)
     end
   end
+  Primes.sum_primes
+  |> Enum.take_while(fn(n) -> n < 5_000_000 end)
+  |> Enum.sum
+  |> IO.inspect
 
+  # Implementar suma de forma paralela
 
+  #recibe el limite de numeros primos y el numero de threads a lanzar
 end
+
+# Prime test - 1 argument
+#IO.puts(Hw.Primes.sum_primes())
