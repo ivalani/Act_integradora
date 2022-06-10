@@ -52,11 +52,10 @@ defmodule Hw.Primes do
 IO.puts("range: #{range}")
 IO.puts("init: #{init}")
     Hw.Primes.sum_primes
-    |> Enum.take_while(fn n -> n < range end)
+    |> Enum.take_while(fn x -> x < range end)
     |> Enum.sum()
     |> IO.inspect()
   end
-
 
 
 
@@ -67,6 +66,7 @@ IO.puts("init: #{init}")
     |> Enum.map(&Task.async(fn -> sum_primes_config(&1 * range, 1 + (&1 - 1) * range) end))
     |> Enum.map(&Task.await(&1))
     |> Enum.sum()
+
 
   end
 
@@ -83,17 +83,17 @@ IO.puts("init: #{init}")
 
 
     timerSec = timer(fn ->  Hw.Primes.sum_primes()|> Enum.take_while(fn n -> n < limit end)|> Enum.sum() end)
-    # timerPar =  timer(fn ->Hw.Primes.sum_primes_parallel(limit, threads)end)
+     timerPar =  timer(fn ->Hw.Primes.sum_primes_parallel(limit, threads)end)
 
     secText = "Secuencial: #{secuencial} time: #{timerSec}"
-    # parText = "Parallel: #{parallel} time: #{timerPar}"
+    parText = "Parallel: #{parallel} time: #{timerPar}"
 
-    # speedUp = "SpeedUp comparing Secuencial over parallel: #{timerSec/timerPar }"
+     speedUp = "SpeedUp comparing Secuencial over parallel: #{timerSec/timerPar }"
 
 
      IO.puts(secText)
-    # IO.puts(parText)
-    # IO.puts(speedUp)
+     IO.puts(parText)
+    IO.puts(speedUp)
 
   end
 end
