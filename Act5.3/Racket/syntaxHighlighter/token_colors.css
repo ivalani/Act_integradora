@@ -1,0 +1,42 @@
+body {
+  background-color: Black;
+  color: Gray;
+}
+
+pre {
+  font-family: Monospace;
+  font-size: 22px;
+}
+
+h1 {
+  color: Black;
+  background-color: Yellow;
+  text-align: center;
+}
+
+.number {
+  color: Blue;
+}
+
+.string {
+  color: Aquamarine;
+  font-style: italic;
+}
+
+.object-key {
+  color: LightSkyBlue;
+  font-weight: bold;
+}
+
+.reserved_word {
+  font-weight: bold;
+  color: SandyBrown;
+}
+
+.chars {
+  color: Orange;
+}
+
+.bool {
+  color: magenta;
+}
