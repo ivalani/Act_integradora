@@ -1,3 +1,8 @@
+#Andrea Serrano Diego - A01028728
+#Iwalani Amador Piaga - A01732251
+#Daniel Sanchez Sanchez - A0178575
+
+
 import logging
 import queue
 import os
@@ -5,9 +10,9 @@ import threading
 import time
 from lexico import resaltadorLexico
 
-# VARIABLES A CAMBIAR
+# VARIABLES QUE SE PUEDEN CAMBIAR
 N = 2               # N threads
-PATH = "/test"          # Path a la carpeta a ejecutar
+PATH = "/test"      # Carpeta a ejecutar
 
 
 q = queue.Queue()
@@ -68,7 +73,7 @@ class ConsumerThread(threading.Thread):
                     try:
                         resaltadorLexico(archivo=item, salida=salida)
                     except:
-                        logging.error(f"Error al leer el archivo {str(item).split('/')[-1]} arrojado por el analizador.")
+                        logging.error(f"Error al leer el archivo {str(item).split('/')[-1]} .")
         return
 
 
@@ -88,4 +93,4 @@ if __name__ == '__main__':
                 consumer.join()
             break
     
-    print(f"No. hilos: {N} - Tiempo: {round(time.time() - start_time, 5)} seg.")
+    print(f"No. threads: {N} - Tiempo: {round(time.time() - start_time, 5)} seg.")

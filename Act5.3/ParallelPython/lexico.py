@@ -1,8 +1,11 @@
+#Andrea Serrano Diego - A01028728
+#Iwalani Amador Piaga - A01732251
+#Daniel Sanchez Sanchez - A0178575
+
 import pandas as pd
 
 def output(word: str, result: str, salida: str):
-    """Se escribe dentro de un archivo el resultado de cada una de las palabras
-    Args:
+    """
         word (str): La palabra que se leyó
         result (str): El tipo de palabra que es
     """
@@ -34,7 +37,7 @@ def output(word: str, result: str, salida: str):
         "Error",
         "Simbolo"
     ]
-    
+    """ Para no utilizar un template y leer desde txt """
     colores = {
         "Numero": "#ffe119",
         "Logico":"#4363d8",
@@ -63,9 +66,8 @@ def output(word: str, result: str, salida: str):
 
 
 def analyze(line: str, data: pd.DataFrame, salida: str):
-    """Analiza cada una de las lineas del archivo
-    Args:
-        line (str): La línea a analizar
+    """
+         line (str): La línea a analizar
     """
     # Inicializar las variables
     
@@ -140,8 +142,6 @@ def analyze(line: str, data: pd.DataFrame, salida: str):
         
 def resaltadorLexico(archivo: str, salida: str):
     """
-    Función principal donde se lee el archivo y se mandan a llamar las demás funciones para realizar el procesamiento
-    Args:
         archivo (str): Nombre del archivo que se tiene que leer
     """
     # Leer la tabla de transición

@@ -1,0 +1,39 @@
+body {
+    padding: 2rem 2rem;
+    background-color: #0a0e14;
+    font-family: Consolas, "Courier New", monospace;
+    font-weight: normal;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: white;
+}
+
+.palabra-reservada {
+    color: #51c7da;
+}
+
+.comentario {
+    color: #494c4d;
+    font-style: italic;
+}
+
+.string {
+    color: #c3e886;
+}
+
+.variable {
+    color: #ea8c6c;
+}
+
+.operadores-logicos {
+    color: #7ba8fe;
+}
+
+.operadores {
+    color: #c792ea
+    ;
+}
+
+.numero{
+    color: #eee;
+}
