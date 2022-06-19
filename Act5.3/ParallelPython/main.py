@@ -11,8 +11,8 @@ import time
 from lexico import resaltadorLexico
 
 # VARIABLES QUE SE PUEDEN CAMBIAR
-N = 2               # N threads
-PATH = "/test"      # Carpeta a ejecutar
+N = 6               # N threads
+PATH = "./test"      # Carpeta a ejecutar
 
 
 q = queue.Queue()
